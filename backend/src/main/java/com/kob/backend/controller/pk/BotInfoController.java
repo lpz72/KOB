@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//前后端分离代码，后端传送数据
 @RestController //作用:
 @RequestMapping("/pk/") //父目录
 public class BotInfoController {

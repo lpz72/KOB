@@ -4,6 +4,8 @@ package com.kob.backend.controller.pk;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
+//前后端不分离情况，此时后端传送的是网页
 //当访问一个链接时，这个链接就会去找controller，然后找对应的函数
 
 @Controller
