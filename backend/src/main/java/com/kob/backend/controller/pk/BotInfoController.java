@@ -14,20 +14,13 @@ import java.util.Map;
 public class BotInfoController {
 
     @RequestMapping("getbotinfo/") //子目录
-    public List<Map<String,String>> getBotInfo() {
-        List<Map<String,String>> list = new ArrayList<>();
-        Map<String,String> bot1 = new HashMap<>();
-        Map<String,String> bot2 = new HashMap<>();
+    public Map<String,String> getBotInfo() {
+        Map<String,String> bot = new HashMap<>();
 
-        bot1.put("rice","100");
-        bot1.put("bot","200");
+        bot.put("name","rice");
+        bot.put("rating","2000");
 
-        bot2.put("lpz","1000");
-        bot2.put("lpz2","2000");
-
-        list.add(bot1);
-        list.add(bot2);
-        return list;
+        return bot;
 
     }
 }
