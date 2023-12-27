@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+//解决跨域问题代码
 @Configuration
 public class CorsConfig implements Filter {
     @Override
