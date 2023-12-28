@@ -1,15 +1,16 @@
+<!-- 调用关系PkIndexView -> PlayGround.vue(背景) -> GameMap.vue(生成对象)
+     -> GameMap.js(实时计算地图尺寸，将地图画出) ->(继承) AcGameObject.js  -->
+
 <template>
-    <ContenField>
-        对战
-    </ContenField>
+    <PlayGround/>
 </template>
 
 <script>
-import ContenField from '@/components/ContenField.vue';
+import PlayGround from '@/components/PlayGround.vue';
 
 export default{
     components:{
-        ContenField,
+        PlayGround,
     }
 }
 

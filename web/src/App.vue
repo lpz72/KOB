@@ -48,7 +48,7 @@ export default {
 <style>
 
 body{
-  background-image: url("@/assets/background.png");/*背景图片*/
+  background-image: url("@/assets/images/background.png");/*背景图片*/
   background-size: cover; /*背景图片全覆盖*/
 }
 </style>
