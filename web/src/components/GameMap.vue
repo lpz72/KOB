@@ -2,7 +2,7 @@
     <!-- ref="parent"就可将下面的parent与此div绑定 -->
     <div  ref="parent" class="gamemap">
         <!-- ref="canvas"就可将下面的canvas与此canvas绑定 -->
-        <canvas ref="canvas" ></canvas>
+        <canvas ref="canvas" tabindex="0" ></canvas> <!-- 加上tabindex="0"，让用户可以用键盘输入操作蛇 -->
     </div>
 </template>
 
