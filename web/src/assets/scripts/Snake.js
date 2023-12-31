@@ -68,7 +68,7 @@ export class Snake extends AcGameObject{
         this.status = "move";
         this.step ++; //回合数加1
 
-        //
+    
         const k = this.cells.length;
         for (let i = k; i > 0; i -- ) {
             this.cells[i] = JSON.parse(JSON.stringify(this.cells[i - 1]));
@@ -147,6 +147,7 @@ export class Snake extends AcGameObject{
             ctx.fill(); //填充颜色
         }
 
+        //用长方形填充蛇，使蛇更饱满
         for (let i = 1;i < this.cells.length;i ++){
             const a = this.cells[i - 1],b = this.cells[i];
             //两点重合时不需要填充
