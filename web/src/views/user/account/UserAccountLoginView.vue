@@ -1,5 +1,5 @@
 <template>
-    <ContenField>
+    <ContenField v-if="!$store.state.user.pulling_info"> <!-- 没有正在拉取数据时，显示 -->
         <div class="row justify-content-md-center">
             <div class="col-3">
                 <form @submit.prevent="login"> <!-- form，加入表单 -->
@@ -36,6 +36,28 @@ export default{
         let password = ref('');
         let error_message = ref('');
 
+        //当刷新后还需在UserAccountLoginView中判断，获取localStorage中的token，判断是否存在，存在的话则
+        //更新用户的token，调用user.js的getInfo函数，成功则跳转到加页面
+        const jwt_token = localStorage.getItem("jwt_token");
+        if (jwt_token){
+            store.commit("updateToken",jwt_token);
+            //从云端获取用户信息更新用户，以该身份继续访问页面
+            store.dispatch("getInfo",{
+                success(){ //回调函数
+                    router.push({name: "home"}); 
+                    //获取用户信息成功后，则从getInfo回调success函数，跳转到家页面
+                    store.commit("updatePuiilingInfo",false);
+                },
+                error(){ //失败时
+                    store.commit("updatePuiilingInfo",false);
+                }
+            })
+        }
+        else { //token过期时
+            store.commit("updatePuiilingInfo",false);
+        }
+
+
         const login = () =>{
             error_message.value = "";
             store.dispatch("login",{
@@ -45,7 +67,7 @@ export default{
                 store.dispatch("getInfo",{
                     success() {
                     router.push({name: 'home'});//登录成功后跳转到主页面
-                    console.log(store.state.user);
+                    //console.log(store.state.user);
                     } 
                 })
                 
