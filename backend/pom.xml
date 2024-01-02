@@ -5,7 +5,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.1</version>
+<!--        <version>3.2.1</version>-->
+        <version>2.6.0</version> <!-- 修改springboot版本，以适应SecurityConfig类里的函数 -->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kob</groupId>
@@ -63,7 +64,8 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
-            <version>3.0.3</version>
+<!--        <version>3.0.3</version> ，因为降低了springboot版本，所以mybatis-spring也需要降低，否则会报错   -->
+            <version>2.0.6</version>
         </dependency>
 
         <dependency>
@@ -76,8 +78,35 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
             <version>3.2.1</version>
+<!--            <version>3.0.1</version>-->
         </dependency>
 
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.12.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.12.3</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.12.3</version>
+            <scope>runtime</scope>
+        </dependency>
+
+<!-- 用于解决Config.filter.JwtAuthenticationTokenFilter import org.jetbrains.annotations.NotNull;爆红 -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>24.0.1</version>
+        </dependency>
 
 
 
