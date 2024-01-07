@@ -21,9 +21,9 @@ public class Bot {
     private String description;
     private String content;
     private Integer rating;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") //定义时间格式
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "Asia/Shanghai") //定义时间格式,并设定时区，东八区，只要在中国就这样写就可以
     private Date createtime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "Asia/Shanghai")
     private Date modifytime;
 
 
