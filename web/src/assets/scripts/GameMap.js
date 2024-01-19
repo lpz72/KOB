@@ -4,7 +4,7 @@ import { Wall } from "./Wall";
 
 export class GameMap extends AcGameObject{
     //传两个参数,ctx：画布，parent:画布的父元素，可以动态改变画布的大小
-    constructor(ctx,parent){
+    constructor(ctx,parent,store){
         super(); //执行基类的构造函数
 
         this.ctx = ctx;
@@ -13,6 +13,7 @@ export class GameMap extends AcGameObject{
 
         this.rows = 13;
         this.cols = 14;
+        this.store = store;
         this.walls = []; //障碍物数组
         this.inner_walls_count = 20; //定义内部障碍物的数量
 
@@ -23,55 +24,69 @@ export class GameMap extends AcGameObject{
     }
 
     //判断左下角与右上角是否联通
-    check_connectivity(g,sx,sy,tx,ty){
+    // check_connectivity(g,sx,sy,tx,ty){
 
-        if (sx == tx && sy == ty) return true;
-        g[sx][sy] = true;
+    //     if (sx == tx && sy == ty) return true;
+    //     g[sx][sy] = true;
 
-        let dx = [-1,1,0,0],dy = [0,0,1,-1];
+    //     let dx = [-1,1,0,0],dy = [0,0,1,-1];
 
-        for (let i = 0;i < 4;i ++){
-            let x = sx + dx[i],y = sy + dy[i];
-            if (!g[x][y] && this.check_connectivity(g,x,y,tx,ty))
-             return true;
-        }
+    //     for (let i = 0;i < 4;i ++){
+    //         let x = sx + dx[i],y = sy + dy[i];
+    //         if (!g[x][y] && this.check_connectivity(g,x,y,tx,ty))
+    //          return true;
+    //     }
 
-        return false;
+    //     return false;
 
-    }
+    // }
+
+    // create_walls() {
+    //     const g = [];
+    //     for (let r = 0;r < this.rows;r ++){
+    //         g[r] = [];
+    //         for (let c = 0;c < this.cols;c ++)
+    //             g[r][c] = false;
+    //     }
+
+    //     //给四周加上墙
+    //     for (let r = 0;r < this.rows;r ++) g[r][0] = g[r][this.cols - 1] = true;
+    //     for (let c = 0;c < this.cols;c ++) g[0][c] = g[this.rows - 1][c] = true;
+
+    //     //随机生成障碍物,以对角线为轴，对称填充
+    //     for (let i = 0;i < this.inner_walls_count / 2;i ++){
+    //         //在1000次内总能找到一个没有障碍物的方格
+    //         for (let j = 0;j < 1000;j ++){
+    //             //random会生成[0,1)内的随机数，乘以行数取整即可生成this.rows-1内的任意一行
+    //             let r = parseInt(Math.random() * this.rows);
+    //             let c = parseInt(Math.random() * this.cols);
+
+    //             if(g[r][c] || g[this.rows - 1 - r][this.cols - 1 - c]) continue;
+
+    //             //左下角和右上角作为双方蛇的出生地，不能被填充障碍物
+    //             if(r == this.rows - 2 && c == 1 || r == 1 && c == this.cols - 2) continue;
+
+    //             g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
+    //             break;
+    //         }
+    //     }
+
+    //     const copy_g = JSON.parse(JSON.stringify(g)); //复制并重新生成一个全新数组
+    //     if (!this.check_connectivity(copy_g,this.rows - 2,1,1,this.cols - 2)) return false;
+
+    //     for (let r = 0;r < this.rows;r ++)
+    //         for (let c = 0;c < this.cols;c ++){
+    //             if (g[r][c]){
+    //                 this.walls.push(new Wall(r,c,this));
+    //             }
+    //         }
+
+    //     return true;
+    // }
 
     create_walls() {
-        const g = [];
-        for (let r = 0;r < this.rows;r ++){
-            g[r] = [];
-            for (let c = 0;c < this.cols;c ++)
-                g[r][c] = false;
-        }
+       const g = this.store.state.pk.gamemap;
 
-        //给四周加上墙
-        for (let r = 0;r < this.rows;r ++) g[r][0] = g[r][this.cols - 1] = true;
-        for (let c = 0;c < this.cols;c ++) g[0][c] = g[this.rows - 1][c] = true;
-
-        //随机生成障碍物,以对角线为轴，对称填充
-        for (let i = 0;i < this.inner_walls_count / 2;i ++){
-            //在1000次内总能找到一个没有障碍物的方格
-            for (let j = 0;j < 1000;j ++){
-                //random会生成[0,1)内的随机数，乘以行数取整即可生成this.rows-1内的任意一行
-                let r = parseInt(Math.random() * this.rows);
-                let c = parseInt(Math.random() * this.cols);
-
-                if(g[r][c] || g[this.rows - 1 - r][this.cols - 1 - c]) continue;
-
-                //左下角和右上角作为双方蛇的出生地，不能被填充障碍物
-                if(r == this.rows - 2 && c == 1 || r == 1 && c == this.cols - 2) continue;
-
-                g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
-                break;
-            }
-        }
-
-        const copy_g = JSON.parse(JSON.stringify(g)); //复制并重新生成一个全新数组
-        if (!this.check_connectivity(copy_g,this.rows - 2,1,1,this.cols - 2)) return false;
 
         for (let r = 0;r < this.rows;r ++)
             for (let c = 0;c < this.cols;c ++){
@@ -82,7 +97,6 @@ export class GameMap extends AcGameObject{
 
         return true;
     }
-
     //监听键盘输入
     add_listening_events() {
         //令canvas聚焦
@@ -103,10 +117,12 @@ export class GameMap extends AcGameObject{
 
     start() {
         //只有生成的地图联通才可以,否则，一直生成，直到联通，1000次大概率可以联通
-        for (let i = 0;i < 1000;i ++){
-            if (this.create_walls())
-              break;
-        }
+        // for (let i = 0;i < 1000;i ++){
+        //     if (this.create_walls())
+        //       break;
+        // }
+
+        this.create_walls();
 
         this.add_listening_events();
     }
